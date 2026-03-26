@@ -87,7 +87,8 @@ export const createProduct = async (req, res) => {
     } = req.body;
 
     // 🔥 MAIN FIX
-    const imageUrl = req.file?.path || (Array.isArray(images) && images.length ? images[0] : null);
+   const imageUrl =
+  Array.isArray(images) && images.length ? images[0] : null;
 
     if (!name || price === undefined || !imageUrl || !(subCategory || category)) {
       return res.status(400).json({
@@ -149,12 +150,7 @@ export const updateProduct = async (req, res) => {
       product.image = images[0];
     }
 
-    // Optional: single file upload support
-    if (req.file) {
-      product.image = req.file.path;
-      product.images = [req.file.path];
-    }
-
+  
     product.name = name ?? product.name;
     product.price = price !== undefined ? Number(price) : product.price;
     product.subCategory = subCategory ?? category ?? product.subCategory;
